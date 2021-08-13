@@ -69,7 +69,22 @@ const Callback3 = (req, res) => {
     res.end();
 }
 
+
 app.get("/testeMultipleHandlersArray", [Callback1, Callback2, Callback3]);
+
+
+//route
+app.route("/testRoute")
+   .get((req, res) => {
+       res.send("/testeRout GET")
+   }) 
+   .post(( req, res) => {
+        res.send("/testeRout POST")
+   })
+   .delete((req, res) => {
+        res.send("/testeRout DELETE")
+   });
+
 
 app.listen(3000, () => {
     console.log("API STARTED");
