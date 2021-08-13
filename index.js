@@ -34,17 +34,43 @@ app.get(/.*Red$/, (req, res) => {
 });
 
 //Parametros na rota
-app.get("/testeParam/:id/:a?", (req, res) =>{
+app.get("/testeParam/:id/:a?", (req, res) => {
     //params pega os parametros da rota
     res.send(req.params.id + " " + req.params.a);
 });
 
 //parametros via query
-app.get("/testeQuery",(req, res) =>{
+app.get("/testeQuery",(req, res) => {
    res.send(req.query);
 });
 
+//next
+app.get("/testeMultipleHandlers", (req, res, next) => {
+       console.log("Callback 1");
+       next();
+}, (req, res)=>{
+        console.log("Callback 2");
+        res.end()
+});
+
+//next com array
+const Callback1 = (req, res, next) => {
+    console.log("Callback 1");
+    next();
+}
+
+function Callback2(req, res, next){
+    console.log("CallBack 2");
+    next();
+};
+
+const Callback3 = (req, res) => {
+    console.log("CallBack 3");
+    res.end();
+}
+
+app.get("/testeMultipleHandlersArray", [Callback1, Callback2, Callback3]);
 
 app.listen(3000, () => {
-    console.log("APi STARTED");
+    console.log("API STARTED");
 });
